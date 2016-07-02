@@ -3,4 +3,9 @@
     <string name="login_username_disp">Utilisateur :</string>
     <string name="login_password_disp">Mot de passe :</string>
     <string name="login_btn">Connexion</string>
+    <!-- String of DashBoard activity -->
+    <string name="welcome_msg">Bonjour docteur aaaa</string>
+    <string name="dossier_status">Pas de nouveaux dossiers</string>
+    <string name="addr_msg">8 rue bidon TOULOUSE</string>
+    <string name="spe_msg">Generaliste</string>
 </resources>
