@@ -11,12 +11,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import projet.cnam.teleconsultmobile.Tasks.FolderInfoTask;
+import projet.cnam.teleconsultmobile.Tasks.ListnerFolderInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListnerMedicInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.MedicInfoTask;
 
 import static projet.cnam.teleconsultmobile.R.drawable.femdoc;
 
-public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask{
+public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask, ListnerFolderInfoTask{
 
     private TextView welcomeLabel;
     private ImageView photo;
@@ -24,13 +26,14 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
     private TextView speLabel;
     private TextView folderStatus;
     private ListView folderList;
+    private String[] username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         Bundle bundle = getIntent().getExtras();
-        String[] username = new String[]{bundle.getString("user")};
+        this.username = new String[]{bundle.getString("user")};
 
         //Get all widgets
         welcomeLabel = (TextView) findViewById(R.id.welcomeLabelID);
@@ -42,7 +45,7 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
 
         //Get doctor information from webservice
         MedicInfoTask medicInfoTask = new MedicInfoTask(Dashboard.this);
-        medicInfoTask.execute(username);
+        medicInfoTask.execute(this.username);
     }
 
     @Override
@@ -58,5 +61,16 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
         }
         addrLabel.setText(jsonObject.get("adresse").toString());
         speLabel.setText(jsonObject.get("specialite").toString());
+        //Get folder information with medic name (Task)
+        FolderInfoTask folderInfoTask = new FolderInfoTask(Dashboard.this);
+        folderInfoTask.execute(this.username);
+    }
+
+    @Override
+    public void onListnerFolderInfoTaskResult(JSONArray object) throws JSONException {
+        if (object.length()>0){
+            folderStatus.setText("Vous avez "+object.length()+" dossier(s)");
+        }
+
     }
 }

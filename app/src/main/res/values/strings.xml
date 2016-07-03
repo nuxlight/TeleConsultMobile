@@ -8,4 +8,9 @@
     <string name="dossier_status">Pas de nouveaux dossiers</string>
     <string name="addr_msg">8 rue bidon TOULOUSE</string>
     <string name="spe_msg">Generaliste</string>
+    <!-- String for list of folders -->
+    <string name="patient_name">Micheal</string>
+    <string name="patient_sexe">sexe : M</string>
+    <string name="patient_age">35 ans</string>
+    <string name="patient_pato">Pathologie : Toux</string>
 </resources>
