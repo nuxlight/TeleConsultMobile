@@ -92,6 +92,11 @@
         android:textColor="#000"
         android:id="@+id/folderStatusID"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

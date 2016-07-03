@@ -3,6 +3,7 @@ package projet.cnam.teleconsultmobile;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -11,6 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+import projet.cnam.teleconsultmobile.Adaptors.FoldersAdaptor;
 import projet.cnam.teleconsultmobile.Tasks.FolderInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListnerFolderInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListnerMedicInfoTask;
@@ -71,6 +75,21 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
         if (object.length()>0){
             folderStatus.setText("Vous avez "+object.length()+" dossier(s)");
         }
-
+        //Create folders data sources and put the data in ArrayAdaptor to display information
+        ArrayList<Folder> foldersList = new ArrayList<Folder>();
+        for(int a=0;a<object.length();a++){
+            JSONObject jsonFolder = object.getJSONObject(a);
+            Folder folder = new Folder(jsonFolder.getString("patient"),
+                    jsonFolder.getString("medecin"),
+                    jsonFolder.getString("sexe"),
+                    jsonFolder.getString("age"),
+                    jsonFolder.getString("pathologie"),
+                    jsonFolder.getString("avis_medecin"),
+                    jsonFolder.getString("avis_ref"),
+                    jsonFolder.getInt("etat_dossier"));
+            foldersList.add(folder);
+        }
+        FoldersAdaptor foldersAdaptor = new FoldersAdaptor(this, 0, foldersList);
+        this.folderList.setAdapter(foldersAdaptor);
     }
 }

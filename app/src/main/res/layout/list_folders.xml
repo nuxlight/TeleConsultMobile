@@ -78,18 +78,9 @@
         android:text="Status dossier :"
         android:textSize="20dp"
         android:textColor="#000"
+        android:id="@+id/patient_statusID"
         />
 
     </LinearLayout>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="70dp"
-        android:id="@+id/spePhotoID"
-        android:src="@drawable/foldersend"/>
 
 </LinearLayout>
