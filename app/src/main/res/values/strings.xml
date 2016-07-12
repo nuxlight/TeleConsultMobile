@@ -13,4 +13,20 @@
     <string name="patient_sexe">sexe : M</string>
     <string name="patient_age">35 ans</string>
     <string name="patient_pato">Pathologie : Toux</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_consult">Consult</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string-array name="pref_string_algo">
+        <item>Algo_type_1</item>
+        <item>Algo_type_2</item>
+        <item>Algo_type_3</item>
+    </string-array>
+    <string-array name="pref_string_algo_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>

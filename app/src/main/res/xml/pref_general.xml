@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Configurations general">
+
+        <CheckBoxPreference
+            android:key="pref_notif_choice"
+            android:title="Activer notifications"
+            android:defaultValue="true"
+            />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Configurations des algorithmes">
+
+        <ListPreference
+            android:key="pref_algo_choice"
+            android:title="Algorithme de traitement"
+            android:dialogTitle="Algorithmes disponnibles"
+            android:entries="@array/pref_string_algo"
+            android:entryValues="@array/pref_string_algo_values"
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,5 +1,6 @@
 package projet.cnam.teleconsultmobile;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 import projet.cnam.teleconsultmobile.Tasks.ListenerLoginTask;
 import projet.cnam.teleconsultmobile.Tasks.LoginTask;
 
-public class MainActivity extends AppCompatActivity implements ListenerLoginTask {
+public class MainActivity extends Activity implements ListenerLoginTask {
 
     private EditText usernameEntry;
     private EditText passwordEntry;
