@@ -39,11 +39,7 @@ public class FoldersAdaptor extends ArrayAdapter<Folder> {
         patientSex.setText(folder.getPatientSexe());
         patientAge.setText(folder.getPatientAge());
         patientPato.setText(folder.getPatientPato());
-        switch (folder.getPatientFolderState()){
-            case 1:
-                patientStatus.setText("Status dossier : envoyé");
-            break;
-        }
+        patientStatus.setText(folder.getPatientFolderState());
 
         return convertView;
     }

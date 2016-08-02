@@ -29,8 +29,8 @@ public class FolderInfoTask extends AsyncTask<String, Void, JSONArray> {
 
         Webb client = Webb.create();
         client.setBaseUri(urlLogin);
-        Response<JSONArray> response = client.get("/listFolder")
-                .param("medic", username)
+        Response<JSONArray> response = client.get("/getFolders")
+                .param("medicID", username)
                 .asJsonArray();
         return response.getBody();
     }

@@ -10,6 +10,17 @@
             android:defaultValue="true"
             />
 
+        <EditTextPreference
+            android:key="pref_server_address"
+            android:title="Adresse IP serveur"
+
+            />
+
+        <EditTextPreference
+            android:key="pref_server_port"
+            android:title="Port d'écoute du serveur"
+            />
+
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Configurations des algorithmes">
@@ -21,6 +32,17 @@
             android:entries="@array/pref_string_algo"
             android:entryValues="@array/pref_string_algo_values"
             />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Equipements">
+
+        <PreferenceScreen
+            android:title="Configuration du HxM"
+            android:summary="Ecran de configuration">
+            <intent android:action="projet.cnam.teleconsultmobile.HxMActivity"/>
+        </PreferenceScreen>
 
     </PreferenceCategory>
 

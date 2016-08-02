@@ -22,9 +22,14 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".ConsultActivity"
-            android:label="@string/title_activity_consult"
-            />
+        <activity
+            android:name=".ConsultActivity"
+            android:label="@string/title_activity_consult" />
+        <activity android:name=".HxMActivity">
+            <intent-filter>
+                <action android:name="projet.cnam.teleconsultmobile.HxMActivity"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

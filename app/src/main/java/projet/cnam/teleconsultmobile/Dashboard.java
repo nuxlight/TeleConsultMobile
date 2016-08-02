@@ -50,6 +50,7 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
     private TextView folderStatus;
     private ListView folderList;
     private String[] username;
+    private String medicid;
     private Drawer drawer;
 
     @Override
@@ -66,6 +67,7 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
 
         Bundle bundle = getIntent().getExtras();
         this.username = new String[]{bundle.getString("user")};
+        this.medicid = bundle.getString("medicID");
 
         //Create the NavigationDrawer
         generateDrawer();
@@ -126,7 +128,7 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
                             case 3:
                                 Intent intentSet = new Intent(Dashboard.this, SettingsActivity.class);
                                 startActivity(intentSet);
-                            break;
+                                break;
                         }
                         return false;
                     }
@@ -166,7 +168,7 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
         speLabel.setText(jsonObject.get("specialite").toString());
         //Get folder information with medic name (Task)
         FolderInfoTask folderInfoTask = new FolderInfoTask(Dashboard.this);
-        folderInfoTask.execute(this.username);
+        folderInfoTask.execute(this.medicid);
     }
 
     @Override
@@ -178,15 +180,16 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
         ArrayList<Folder> foldersList = new ArrayList<Folder>();
         for(int a=0;a<object.length();a++){
             JSONObject jsonFolder = object.getJSONObject(a);
-            Folder folder = new Folder(jsonFolder.getString("patient"),
-                    jsonFolder.getString("medecin"),
-                    jsonFolder.getString("sexe"),
-                    jsonFolder.getString("age"),
-                    jsonFolder.getString("pathologie"),
-                    jsonFolder.getString("avis_medecin"),
-                    jsonFolder.getString("avis_ref"),
-                    jsonFolder.getInt("etat_dossier"));
+            Folder folder = new Folder(jsonFolder.getString("patient_lastname"),
+                    this.username.toString(),
+                    jsonFolder.getString("patient_genre"),
+                    jsonFolder.getString("patient_age"),
+                    jsonFolder.getString("examen_name"),
+                    null,
+                    null,
+                    jsonFolder.getString("folder_status"));
             foldersList.add(folder);
+            Log.d(getClass().getName(), "DEBUG "+folder.toString());
         }
         FoldersAdaptor foldersAdaptor = new FoldersAdaptor(this, 0, foldersList);
         this.folderList.setAdapter(foldersAdaptor);

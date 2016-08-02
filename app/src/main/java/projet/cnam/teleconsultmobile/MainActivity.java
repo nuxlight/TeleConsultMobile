@@ -3,13 +3,10 @@ package projet.cnam.teleconsultmobile;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import projet.cnam.teleconsultmobile.Tasks.ListenerLoginTask;
 import projet.cnam.teleconsultmobile.Tasks.LoginTask;
@@ -19,6 +16,7 @@ public class MainActivity extends Activity implements ListenerLoginTask {
     private EditText usernameEntry;
     private EditText passwordEntry;
     private Button  loginBtn;
+    private Button  configBtn;
     private appPreference appPreference;
 
     @Override
@@ -26,18 +24,20 @@ public class MainActivity extends Activity implements ListenerLoginTask {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Initialize pref data
-        appPreference = new appPreference(MainActivity.this);
+        appPreference = new appPreference(getApplicationContext());
 
         //Get all graphical part
         usernameEntry = (EditText) findViewById(R.id.login_username_entry);
         passwordEntry = (EditText) findViewById(R.id.login_pass_entry);
         loginBtn = (Button) findViewById(R.id.login_button);
+        configBtn = (Button) findViewById(R.id.config_button);
 
         //Check preferences
-        SharedPreferences preferences = getSharedPreferences(MainActivity.class.getSimpleName(), 1);
-        usernameEntry.setText(preferences.getString("username_medic", ""));
-        passwordEntry.setText(preferences.getString("password_medic", ""));
+        String[] prefs = appPreference.getUserPrefs();
+        usernameEntry.setText(prefs[0]);
+        passwordEntry.setText(prefs[1]);
 
+        //Login in app
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,13 +46,23 @@ public class MainActivity extends Activity implements ListenerLoginTask {
                 loginTask.execute(perfsResult);
             }
         });
+
+        //Start the configuration activity
+        configBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentSet = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intentSet);
+            }
+        });
     }
 
     @Override
-    public void onLoginTaskTrue() {
+    public void onLoginTaskTrue(String auth) {
         //Save users preferences
         this.appPreference.saveUserPrefs(usernameEntry.getText().toString(), passwordEntry.getText().toString());
         Intent intent = new Intent(MainActivity.this, Dashboard.class);
+        intent.putExtra("medicID", auth);
         intent.putExtra("user", usernameEntry.getText().toString());
         startActivity(intent);
     }

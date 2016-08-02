@@ -1,8 +1,10 @@
 <resources>
+    <!-- String for the login activity -->
     <string name="app_name">TeleConsultMobile</string>
     <string name="login_username_disp">Utilisateur :</string>
     <string name="login_password_disp">Mot de passe :</string>
     <string name="login_btn">Connexion</string>
+    <string name="config_btn">Configurations</string>
     <!-- String of DashBoard activity -->
     <string name="welcome_msg">Bonjour docteur aaaa</string>
     <string name="dossier_status">Pas de nouveaux dossiers</string>
@@ -12,7 +14,7 @@
     <string name="patient_name">Micheal</string>
     <string name="patient_sexe">sexe : M</string>
     <string name="patient_age">35 ans</string>
-    <string name="patient_pato">Pathologie : Toux</string>
+    <string name="patient_pato">Examen : ...</string>
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_consult">Consult</string>
 

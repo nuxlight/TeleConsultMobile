@@ -9,6 +9,9 @@ import com.goebl.david.Request;
 import com.goebl.david.Response;
 import com.goebl.david.Webb;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.HttpURLConnection;
 
 import projet.cnam.teleconsultmobile.appPreference;
@@ -18,7 +21,7 @@ import projet.cnam.teleconsultmobile.appPreference;
  * @author Thibaud Pellissier
  * @version 0.1
  */
-public class LoginTask extends AsyncTask<String, Void, Boolean>{
+public class LoginTask extends AsyncTask<String, Void, JSONObject>{
 
     private ListenerLoginTask listenerLoginTask;
 
@@ -27,7 +30,7 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
     }
 
     @Override
-    protected Boolean doInBackground(String... strings) {
+    protected JSONObject doInBackground(String... strings) {
         String username = strings[0];
         String password = strings[1];
         String urlLogin = "http://"+appPreference.SERVER_ADDR+":"
@@ -35,27 +38,25 @@ public class LoginTask extends AsyncTask<String, Void, Boolean>{
         HttpURLConnection connection = null;
         Webb client = Webb.create();
         client.setBaseUri(urlLogin);
-        Response<String> response = client.get("/auth")
+        Response<JSONObject> response = client.get("/auth")
                 .param("name", username)
                 .param("password", password)
-                .asString();
-        Log.d(getClass().getName(), response.getBody());
-        if (response.getBody().equals("true")){
-            return true;
-        }
-        else {
-            return false;
-        }
+                .asJsonObject();
+        return response.getBody();
     }
 
     @Override
-    protected void onPostExecute(Boolean aBoolean) {
-        if (aBoolean){
-            listenerLoginTask.onLoginTaskTrue();
+    protected void onPostExecute(JSONObject jsonResult) {
+        try {
+            if (jsonResult.getString("auth").equals("true")){
+                listenerLoginTask.onLoginTaskTrue(jsonResult.getString("medicID"));
+            }
+            else {
+                listenerLoginTask.onLoginTaskFalse();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        else {
-            listenerLoginTask.onLoginTaskFalse();
-        }
-        super.onPostExecute(aBoolean);
+        super.onPostExecute(jsonResult);
     }
 }

@@ -14,6 +14,5 @@ public class ConsultActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.consult_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>Créer consultation</font>"));
-
     }
 }
