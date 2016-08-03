@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import projet.cnam.teleconsultmobile.Folder;
+import projet.cnam.teleconsultmobile.Datatype.Folder;
 import projet.cnam.teleconsultmobile.R;
 
 /**

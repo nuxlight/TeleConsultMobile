@@ -1,4 +1,4 @@
-package projet.cnam.teleconsultmobile;
+package projet.cnam.teleconsultmobile.Datatype;
 
 /**
  * Folder :

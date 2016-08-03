@@ -1,7 +1,9 @@
-package projet.cnam.teleconsultmobile;
+package projet.cnam.teleconsultmobile.Activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import projet.cnam.teleconsultmobile.R;
 
 public class HxMActivity extends AppCompatActivity {
 

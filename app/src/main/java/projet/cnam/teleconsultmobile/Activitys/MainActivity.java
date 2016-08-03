@@ -1,4 +1,4 @@
-package projet.cnam.teleconsultmobile;
+package projet.cnam.teleconsultmobile.Activitys;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import projet.cnam.teleconsultmobile.R;
 import projet.cnam.teleconsultmobile.Tasks.ListenerLoginTask;
 import projet.cnam.teleconsultmobile.Tasks.LoginTask;
+import projet.cnam.teleconsultmobile.appPreference;
 
 public class MainActivity extends Activity implements ListenerLoginTask {
 
@@ -17,7 +19,7 @@ public class MainActivity extends Activity implements ListenerLoginTask {
     private EditText passwordEntry;
     private Button  loginBtn;
     private Button  configBtn;
-    private appPreference appPreference;
+    private projet.cnam.teleconsultmobile.appPreference appPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,9 +1,7 @@
-package projet.cnam.teleconsultmobile;
+package projet.cnam.teleconsultmobile.Activitys;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,12 +31,12 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import projet.cnam.teleconsultmobile.Adaptors.FoldersAdaptor;
+import projet.cnam.teleconsultmobile.Datatype.Folder;
+import projet.cnam.teleconsultmobile.R;
 import projet.cnam.teleconsultmobile.Tasks.FolderInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListnerFolderInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListnerMedicInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.MedicInfoTask;
-
-import static projet.cnam.teleconsultmobile.R.drawable.femdoc;
 
 public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask, ListnerFolderInfoTask{
 
@@ -100,11 +97,14 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
         //Create all items
         PrimaryDrawerItem DashItem = new PrimaryDrawerItem().withIcon(GoogleMaterial.Icon.gmd_home)
                 .withName("Accueil").withIdentifier(1);
-        PrimaryDrawerItem ConsultItem = new PrimaryDrawerItem()
-                .withIcon(GoogleMaterial.Icon.gmd_add_box)
+        PrimaryDrawerItem ConsultItem = new PrimaryDrawerItem().withIcon(GoogleMaterial.Icon.gmd_add_box)
                 .withName("Consultations").withIdentifier(2);
+        PrimaryDrawerItem examenItem = new PrimaryDrawerItem().withIcon(GoogleMaterial.Icon.gmd_note_add)
+                .withName("Examens").withIdentifier(3);
+        PrimaryDrawerItem patientItem = new PrimaryDrawerItem().withIcon(GoogleMaterial.Icon.gmd_verified_user)
+                .withName("Patients").withIdentifier(4);
         PrimaryDrawerItem configItem = new PrimaryDrawerItem().withIcon(GoogleMaterial.Icon.gmd_build)
-                .withName("Configuration").withIdentifier(3);
+                .withName("Configuration").withIdentifier(5);
         //And you can create the final Drawer
         drawer = new DrawerBuilder()
                 .withActivity(this)
@@ -115,6 +115,8 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
                 .addDrawerItems(
                         DashItem,
                         ConsultItem,
+                        examenItem,
+                        patientItem,
                         configItem
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -125,7 +127,7 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
                                 Intent intentConsult = new Intent(Dashboard.this, ConsultActivity.class);
                                 startActivity(intentConsult);
                             break;
-                            case 3:
+                            case 5:
                                 Intent intentSet = new Intent(Dashboard.this, SettingsActivity.class);
                                 startActivity(intentSet);
                                 break;
