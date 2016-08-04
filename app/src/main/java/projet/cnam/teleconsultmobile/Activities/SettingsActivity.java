@@ -1,11 +1,10 @@
-package projet.cnam.teleconsultmobile.Activitys;
+package projet.cnam.teleconsultmobile.Activities;
 
 
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.util.Log;
 
 import projet.cnam.teleconsultmobile.R;
 import projet.cnam.teleconsultmobile.appPreference;

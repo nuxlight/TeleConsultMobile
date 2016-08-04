@@ -1,4 +1,4 @@
-package projet.cnam.teleconsultmobile.Activitys;
+package projet.cnam.teleconsultmobile.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
