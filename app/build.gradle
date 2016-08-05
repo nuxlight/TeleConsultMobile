@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
@@ -11,6 +18,7 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,10 +29,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile('com.mikepenz:materialdrawer:5.3.3@aar') {
         transitive = true
     }
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.goebl:david-webb:1.3.0'

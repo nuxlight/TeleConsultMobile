@@ -4,20 +4,22 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 
+import projet.cnam.teleconsultmobile.R;
 import projet.cnam.teleconsultmobile.handler.MessengerEnvoiFichiersHandler;
 import projet.cnam.teleconsultmobile.handler.ServiceActivityListener;
 import projet.cnam.teleconsultmobile.services.ServiceEnvoiFichiers;
 
-public class ServiceTestActivity extends AppCompatActivity implements ServiceActivityListener{
-    private static final String TAG = "" + ServiceTestActivity.class.getSimpleName();
+public class EnvoiImageTest extends AppCompatActivity implements ServiceActivityListener {
+
+    private static final String TAG = "" + EnvoiImageTest.class.getSimpleName();
     /**
      * Messenger pour envoyer des messages au service
      */
@@ -40,6 +42,7 @@ public class ServiceTestActivity extends AppCompatActivity implements ServiceAct
             // interact with the service.  We are communicating with the
             // service using a Messenger, so here we get a client-side
             // representation of that from the raw IBinder object.
+            Log.e(TAG, "SERVICE CONNECTE");
             mService = new Messenger(service);
             mBound = true;
             envoyerMessageAuService(ServiceEnvoiFichiers.ENVOI_IMAGE,null, false);
@@ -77,10 +80,11 @@ public class ServiceTestActivity extends AppCompatActivity implements ServiceAct
                     "verifier qu'il a bien été instancié", e);
         }
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_service_test);
+        setContentView(R.layout.activity_envoi_image_test);
         Log.e(TAG, "CREATE");
         Intent intent = new Intent(this, ServiceEnvoiFichiers.class);
         startService(intent);
@@ -92,7 +96,7 @@ public class ServiceTestActivity extends AppCompatActivity implements ServiceAct
         super.onStart();
         Log.e(TAG, "START");
         // Bind to LocalService
-        Intent intent = new Intent(ServiceTestActivity.this, ServiceEnvoiFichiers.class);
+        Intent intent = new Intent(EnvoiImageTest.this, ServiceEnvoiFichiers.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         Log.e(TAG, "Bind don");
     }
@@ -118,5 +122,4 @@ public class ServiceTestActivity extends AppCompatActivity implements ServiceAct
             mBound = false;
         }
     }
-
 }

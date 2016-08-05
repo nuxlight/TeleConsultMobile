@@ -2,7 +2,6 @@ package projet.cnam.teleconsultmobile.services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -10,20 +9,32 @@ import android.os.Messenger;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import projet.cnam.teleconsultmobile.runnable.HttpReq;
+
 public class ServiceEnvoiFichiers extends Service {
     private static final String TAG = "" + ServiceEnvoiFichiers.class.getSimpleName();
     /** Command to the service to display a message */
-    public static final int MSG_SAY_HELLO = 1;
+    public static final int ENVOI_IMAGE = 1;
+    public static final int IMAGE_ENVOYE = 2;
+    public static final int ERROR = -9;
 
     /**
-     * Handler of incoming messages from clients.
+     * Handler http
      */
-    class IncomingHandler extends Handler {
+    private final Handler httpHandler = new HttpHandler();
+    class HttpHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case MSG_SAY_HELLO:
-                    Toast.makeText(getApplicationContext(), "hello!", Toast.LENGTH_SHORT).show();
+                case IMAGE_ENVOYE:
+                    Toast.makeText(getApplicationContext(), "Image envoyé!", Toast.LENGTH_LONG).show();
+                    Message message = Message.obtain();
+                    message.what = msg.what;
+                    message.obj = 3;
+                    envoyerMessageClient(message);
                     break;
                 default:
                     super.handleMessage(msg);
@@ -31,15 +42,46 @@ public class ServiceEnvoiFichiers extends Service {
         }
     }
 
+    /**
+     * Target we publish for clients to send messages to IncomingHandler.
+     */
+    final Messenger mMessenger = new Messenger(new IncomingHandler());
+    private Messenger clientMessenger;
+    /**
+     * Handler of incoming messages from clients.
+     */
+    class IncomingHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            if(msg != null && msg.replyTo != null){
+                clientMessenger = msg.replyTo;
+            }
+            Thread thread;
+            switch (msg.what) {
+                case ENVOI_IMAGE:
+                    try {
+                        InputStream ims = getAssets().open("femdoc.png");
+                        HttpReq postDonnees = new HttpReq(httpHandler,ims);
+                        thread = new Thread(postDonnees);
+                        thread.start();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+    }
+
+
     @Override
     public void onCreate() {
         Log.e(TAG, "ON CREATE SERVICE");
     }
 
-    /**
-     * Target we publish for clients to send messages to IncomingHandler.
-     */
-    final Messenger mMessenger = new Messenger(new IncomingHandler());
+
 
     /**
      * When binding to the service, we return an interface to our messenger
@@ -59,9 +101,14 @@ public class ServiceEnvoiFichiers extends Service {
     public void onDestroy() {
         super.onDestroy();
     }
+    public void envoyerMessageClient(Message message){
+        try {
+            clientMessenger.send(message);
+        } catch (Exception e) {
+            // The client is dead.  Remove it from the list;
+            Log.e(TAG, "Client NULL :" + e.toString(), e);
+            Toast.makeText(getApplicationContext(), "Aucun client!", Toast.LENGTH_LONG).show();
 
-    public int envoiDonnees(int code){
-        Log.e(TAG, "Code reçu de l'activité : " + code);
-        return code + 10;
+        }
     }
 }

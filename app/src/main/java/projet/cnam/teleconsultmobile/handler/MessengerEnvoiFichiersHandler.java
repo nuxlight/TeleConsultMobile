@@ -20,8 +20,9 @@ public class MessengerEnvoiFichiersHandler extends Handler{
     public void handleMessage(Message msg) {
         super.handleMessage(msg);
         switch (msg.what) {
-            case ServiceEnvoiFichiers.MSG_SAY_HELLO:
+            case ServiceEnvoiFichiers.ENVOI_IMAGE:
                 Log.e(TAG, "HANDLE MESSAGE FROM SERVICE");
+                Log.e(TAG, "Contenu message = " + msg.obj);
                 break;
         }
     }
