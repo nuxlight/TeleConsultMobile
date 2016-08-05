@@ -1,4 +1,4 @@
-package projet.cnam.teleconsultmobile.Activitys;
+package projet.cnam.teleconsultmobile.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;

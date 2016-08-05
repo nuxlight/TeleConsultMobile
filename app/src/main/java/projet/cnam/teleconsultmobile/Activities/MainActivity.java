@@ -1,4 +1,4 @@
-package projet.cnam.teleconsultmobile.Activitys;
+package projet.cnam.teleconsultmobile.Activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -53,7 +53,8 @@ public class MainActivity extends Activity implements ListenerLoginTask {
         configBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentSet = new Intent(MainActivity.this, SettingsActivity.class);
+                //Intent intentSet = new Intent(MainActivity.this, SettingsActivity.class);
+                Intent intentSet = new Intent(getApplicationContext(),EnvoiImageTest.class);
                 startActivity(intentSet);
             }
         });

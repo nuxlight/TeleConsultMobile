@@ -1,4 +1,4 @@
-package projet.cnam.teleconsultmobile.Activitys;
+package projet.cnam.teleconsultmobile.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

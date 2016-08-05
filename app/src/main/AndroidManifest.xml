@@ -11,25 +11,27 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activitys.MainActivity">
+        <service android:name=".services.ServiceEnvoiFichiers" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activitys.Dashboard" />
+        <activity android:name=".Activities.Dashboard" />
         <activity
-            android:name=".Activitys.SettingsActivity"
+            android:name=".Activities.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".Activitys.ConsultActivity"
+            android:name=".Activities.ConsultActivity"
             android:label="@string/title_activity_consult" />
-        <activity android:name=".Activitys.HxMActivity">
+        <activity android:name=".Activities.HxMActivity">
             <intent-filter>
-                <action android:name="projet.cnam.teleconsultmobile.HxMActivity"/>
+                <action android:name="projet.cnam.teleconsultmobile.HxMActivity" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.EnvoiImageTest"></activity>
     </application>
 
 </manifest>
