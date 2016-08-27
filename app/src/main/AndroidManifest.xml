@@ -34,7 +34,8 @@
         </activity>
         <activity android:name=".Activities.EnvoiImageTest" />
         <activity android:name=".Activities.ExamenActivity" />
-        <activity android:name=".Activities.PatientActivity"></activity>
+        <activity android:name=".Activities.PatientActivity" />
+        <activity android:name=".Activities.ResultActivity"></activity>
     </application>
 
 </manifest>

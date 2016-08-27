@@ -7,14 +7,14 @@ import android.text.Html;
 
 import projet.cnam.teleconsultmobile.R;
 
-public class PatientActivity extends AppCompatActivity {
+public class ResultActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient);
+        setContentView(R.layout.activity_result);
         Toolbar toolbar = (Toolbar) findViewById(R.id.consult_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>Patients</font>"));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>Resultats</font>"));
     }
 }

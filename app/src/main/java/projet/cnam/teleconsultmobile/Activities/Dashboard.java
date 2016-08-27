@@ -143,6 +143,10 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
                                 Intent intentPatient = new Intent(Dashboard.this, PatientActivity.class);
                                 startActivity(intentPatient);
                                 break;
+                            case 5:
+                                Intent intentResult = new Intent(Dashboard.this, ResultActivity.class);
+                                startActivity(intentResult);
+                                break;
                             case 6:
                                 Intent intentSet = new Intent(Dashboard.this, SettingsActivity.class);
                                 startActivity(intentSet);
