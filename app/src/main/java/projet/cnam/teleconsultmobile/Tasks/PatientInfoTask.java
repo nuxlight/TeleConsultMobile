@@ -11,26 +11,26 @@ import org.json.JSONException;
 import projet.cnam.teleconsultmobile.appPreference;
 
 /**
- * Created by thibaud on 02/07/16.
+ * Created by thibaud on 24/08/16.
  */
-public class FolderInfoTask extends AsyncTask<String, Void, JSONArray> {
+public class PatientInfoTask extends AsyncTask<String, Void, JSONArray> {
 
-    private ListnerFolderInfoTask listnerFolderInfoTask;
+    private ListenerPatientInfoTask listenerPatientInfoTask;
 
-    public FolderInfoTask(ListnerFolderInfoTask listener){
-        this.listnerFolderInfoTask = listener;
+    public PatientInfoTask(ListenerPatientInfoTask listener){
+        this.listenerPatientInfoTask = listener;
     }
 
     @Override
     protected JSONArray doInBackground(String... strings) {
-        String username = strings[0];
-        String urlLogin = "http://"+appPreference.SERVER_ADDR+":"
+        //String username = strings[0];
+        String urlLogin = "http://"+ appPreference.SERVER_ADDR+":"
                 +appPreference.SERVER_PORT+"/";
 
         Webb client = Webb.create();
         client.setBaseUri(urlLogin);
-        Response<JSONArray> response = client.get("/getResult")
-                .param("medicID", username)
+        Response<JSONArray> response = client.get("/getPatients")
+                .param("medicID", '1')
                 .asJsonArray();
         return response.getBody();
     }
@@ -38,7 +38,7 @@ public class FolderInfoTask extends AsyncTask<String, Void, JSONArray> {
     @Override
     protected void onPostExecute(JSONArray jsonObject) {
         try {
-            this.listnerFolderInfoTask.onListnerFolderInfoTaskResult(jsonObject);
+            this.listenerPatientInfoTask.onPatientInformationResult(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }

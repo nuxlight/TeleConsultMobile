@@ -9,6 +9,7 @@ import android.os.Messenger;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -34,6 +35,7 @@ public class ServiceEnvoiFichiers extends Service {
                     Message message = Message.obtain();
                     message.what = msg.what;
                     message.obj = 3;
+                    Log.d(getClass().getName(), "DEBUG : "+msg);
                     envoyerMessageClient(message);
                     break;
                 default:

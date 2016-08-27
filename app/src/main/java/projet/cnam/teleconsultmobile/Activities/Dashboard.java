@@ -6,9 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -105,6 +107,8 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
                 .withName("Patients").withIdentifier(4);
         PrimaryDrawerItem configItem = new PrimaryDrawerItem().withIcon(GoogleMaterial.Icon.gmd_build)
                 .withName("Configuration").withIdentifier(5);
+        PrimaryDrawerItem licenceItem = new PrimaryDrawerItem().withIcon(GoogleMaterial.Icon.gmd_short_text)
+                .withName("Licences").withIdentifier(6);
         //And you can create the final Drawer
         drawer = new DrawerBuilder()
                 .withActivity(this)
@@ -117,7 +121,8 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
                         ConsultItem,
                         examenItem,
                         patientItem,
-                        configItem
+                        configItem,
+                        licenceItem
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -127,9 +132,16 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
                                 Intent intentConsult = new Intent(Dashboard.this, ConsultActivity.class);
                                 startActivity(intentConsult);
                             break;
+                            case 3:
+                                Intent intentExamen = new Intent(Dashboard.this, ExamenActivity.class);
+                                startActivity(intentExamen);
+                                break;
                             case 5:
                                 Intent intentSet = new Intent(Dashboard.this, SettingsActivity.class);
                                 startActivity(intentSet);
+                                break;
+                            case 6:
+
                                 break;
                         }
                         return false;

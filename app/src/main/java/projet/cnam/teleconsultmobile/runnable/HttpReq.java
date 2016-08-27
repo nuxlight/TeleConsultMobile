@@ -3,9 +3,6 @@ package projet.cnam.teleconsultmobile.runnable;
 import android.os.Handler;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,8 +11,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
@@ -26,10 +27,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
 
+import projet.cnam.teleconsultmobile.R;
 import projet.cnam.teleconsultmobile.appPreference;
 import projet.cnam.teleconsultmobile.services.ServiceEnvoiFichiers;
 
@@ -65,29 +68,21 @@ public class HttpReq implements Runnable {
         String url = "http://" + appPreference.SERVER_ADDR + ":" + appPreference.SERVER_PORT
                 + "/" + HTTP_UPLOAD_IMAGE;
         //Liste de paramètres pour la requête
-        List<NameValuePair> params = new LinkedList<NameValuePair>();
-        params.add(new BasicNameValuePair("paramInt", "3"));
-        if (!url.endsWith("?")) {
-            url += "?";
-        }
-        Log.e(TAG, "URL = " + url);
-        //Ajout des paramètres à la requête
-        url += URLEncodedUtils.format(params, "UTF-8");
-        req.setURI(URI.create(url));
+        //List<NameValuePair> params = new LinkedList<NameValuePair>();
+        MultipartEntityBuilder entity = MultipartEntityBuilder.create();
         try {
-            //ajouterFichierRequetePost(req, image);
-            ajouterFichierRequetePost(req, null);
-        } catch (IOException e) {
-            Log.e(TAG, "Erreur lors de l'ajout du fichier à la requête : ", e);
+            entity.addPart("fileImg", new InputStreamBody(this.is,"file"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
+        req.setURI(URI.create(url));
+        req.setEntity(entity.build());
         try {
             HttpResponse response = client.execute(req);
             //Traitement de la réponse
             if (response != null && (response.getStatusLine().getStatusCode() == 200)) {
                 String responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
-                Log.e(TAG, "Réponse = " + responseStr);
+                Log.e(getClass().getName(), "Réponse = " + responseStr);
                 /*Gson gson = new GsonBuilder().create();
                 MessageServeurTIPE reponseServeur = gson.fromJson(responseStr, MessageServeurTIPE.class);
                 if(estRequetePost){ //on retourne le statut
@@ -97,7 +92,9 @@ public class HttpReq implements Runnable {
                 }*/
 
             } else if (response != null) {
-                handler.obtainMessage(ServiceEnvoiFichiers.ERROR, -1, -1, response).sendToTarget();
+                String responseStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+                Log.e(getClass().getName(), "Réponse = " + responseStr);
+                //handler.obtainMessage(ServiceEnvoiFichiers.ERROR, -1, -1, response).sendToTarget();
             }
         } catch (IOException e) {
             Log.e(TAG, "impossible de créer le fichier", e);
@@ -119,7 +116,7 @@ public class HttpReq implements Runnable {
         MultipartEntityBuilder builder = MultipartEntityBuilder.create();
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
         //FileInputStream fis = new FileInputStream(fichierJour);
-        ByteArrayBody body = new ByteArrayBody(IOUtils.toByteArray(is),
+        ByteArrayBody body = new ByteArrayBody(IOUtils.toByteArray(this.is),
                 "monImage.png");
         builder.addPart("fichierTest", body);
         HttpEntity entity = builder.build();

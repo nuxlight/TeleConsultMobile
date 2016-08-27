@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service android:name=".services.ServiceEnvoiFichiers" />
+
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +32,8 @@
                 <action android:name="projet.cnam.teleconsultmobile.HxMActivity" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.EnvoiImageTest"></activity>
+        <activity android:name=".Activities.EnvoiImageTest" />
+        <activity android:name=".Activities.ExamenActivity"></activity>
     </application>
 
 </manifest>
