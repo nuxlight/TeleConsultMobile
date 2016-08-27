@@ -68,7 +68,7 @@ public class ConsultActivity extends AppCompatActivity implements ListenerPatien
                     onBackPressed();
                 }
                 else{
-                    Toast.makeText(ConsultActivity.this,"Merci de remplir les cases", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ConsultActivity.this,"Merci de completer les cases", Toast.LENGTH_SHORT).show();
                 }
             }
         });

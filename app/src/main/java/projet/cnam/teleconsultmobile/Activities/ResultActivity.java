@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +29,8 @@ import projet.cnam.teleconsultmobile.Tasks.ListenerExamenInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListenerPatientInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListnerConsultInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.PatientInfoTask;
+import projet.cnam.teleconsultmobile.Tasks.SubmitExamen;
+import projet.cnam.teleconsultmobile.Tasks.SubmitResult;
 import projet.cnam.teleconsultmobile.appPreference;
 
 public class ResultActivity extends AppCompatActivity implements ListenerPatientInfoTask, ListnerConsultInfoTask, ListenerExamenInfoTask {
@@ -43,11 +46,12 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
     private Context appContext;
     private ImageView photoViewImg;
     //others var
-    private String patientID;
-    private String consultID;
-    private String examenID;
-    private String imageName;
-    private String imagePath;
+    private String patientID = "";
+    private String consultID = "";
+    private String examenID = "";
+    private String imageName = "";
+    private String imagePath = "";
+    private String[] medicInfo;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
     //Photo intent return
@@ -57,6 +61,8 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             photoViewImg.setImageBitmap(imageBitmap);
+            imageName = medicInfo[2]+"-"+consultID+"-"+examenID+"-img";
+            photoView.setText("Image : "+imageName);
         }
     }
 
@@ -69,6 +75,8 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>Resultats</font>"));
         //For dialog context
         appContext = getApplicationContext();
+        appPreference appPreference = new appPreference(appContext);
+        medicInfo = appPreference.getUserPrefs();
 
         //Get all UI elements
         consultView = (TextView) findViewById(R.id.viewResultConsult);
@@ -95,8 +103,6 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
             @Override
             public void onClick(View v) {
                 ExamenInfoTask examenInfoTask = new ExamenInfoTask(ResultActivity.this);
-                appPreference appPreference = new appPreference(appContext);
-                String[] medicInfo = appPreference.getUserPrefs();
                 examenInfoTask.execute(medicInfo);
             }
         });
@@ -107,6 +113,23 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
                 Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (photoIntent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(photoIntent, REQUEST_IMAGE_CAPTURE);
+                }
+            }
+        });
+
+        //Validate button
+        resultSendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!consultID.equals("") && !examenID.equals("") && !imageName.equals("")){
+                    imagePath = "./images/"+imageName+".bmp";
+                    String[] strings = {consultID, examenID, imageName, imagePath};
+                    SubmitResult submitResult = new SubmitResult();
+                    submitResult.execute(strings);
+                    Toast.makeText(ResultActivity.this,"Resultat rajouté", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(ResultActivity.this,"Merci de completer les cases", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -149,6 +172,8 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
             public void onClick(DialogInterface dialog, int which) {
                 consultID = cs[which];
                 consultView.setText("Consultation : "+consultID);
+                imageName = medicInfo[2]+"-"+consultID+"-"+examenID+"-img";
+                photoView.setText("Image : "+imageName);
             }
         });
         consultBuilder.create().show();
@@ -170,6 +195,8 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
                 String[] choiceID = cs[which].split("/");
                 examenID = choiceID[0];
                 examenView.setText("Examen : "+cs[which]);
+                imageName = medicInfo[2]+"-"+consultID+"-"+examenID+"-img";
+                photoView.setText("Image : "+imageName);
             }
         });
         consultBuilder.create().show();

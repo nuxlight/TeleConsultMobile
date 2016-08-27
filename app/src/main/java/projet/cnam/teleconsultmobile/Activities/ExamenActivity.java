@@ -59,7 +59,7 @@ public class ExamenActivity extends AppCompatActivity implements ListenerExamenI
                     examenInfoTask.execute(medicInfo);
                 }
                 else {
-                    Toast.makeText(ExamenActivity.this,"Merci de remplir les cases", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ExamenActivity.this,"Merci de completer les cases", Toast.LENGTH_SHORT).show();
                 }
             }
         });
