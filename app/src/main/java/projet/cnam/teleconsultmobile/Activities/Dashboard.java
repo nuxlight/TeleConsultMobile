@@ -152,7 +152,7 @@ public class Dashboard extends AppCompatActivity implements ListnerMedicInfoTask
                                 startActivity(intentSet);
                                 break;
                             case 7:
-
+                                //Licence activity (To draw all licences :) )
                                 break;
                         }
                         return false;

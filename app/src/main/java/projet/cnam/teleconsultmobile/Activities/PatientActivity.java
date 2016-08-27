@@ -13,7 +13,7 @@ public class PatientActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.consult_bar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.patient_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>Patients</font>"));
     }

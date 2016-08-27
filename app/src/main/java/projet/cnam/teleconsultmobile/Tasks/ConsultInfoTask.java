@@ -17,9 +17,13 @@ public class ConsultInfoTask extends AsyncTask<String, Void, JSONArray> {
 
     private ListnerConsultInfoTask listnerConsultInfoTask;
 
+    public ConsultInfoTask(ListnerConsultInfoTask listnerConsultInfoTask) {
+        this.listnerConsultInfoTask = listnerConsultInfoTask;
+    }
+
     @Override
     protected JSONArray doInBackground(String... params) {
-        String patientID = params[0];
+        String patientID = params[1];
         String urlLogin = "http://"+ appPreference.SERVER_ADDR+":"
                 +appPreference.SERVER_PORT+"/";
 
