@@ -16,17 +16,18 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 
-import projet.cnam.teleconsultmobile.Adaptors.FoldersAdaptor;
 import projet.cnam.teleconsultmobile.R;
 import projet.cnam.teleconsultmobile.Tasks.ExamenInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListenerExamenInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.SubmitExamen;
+import projet.cnam.teleconsultmobile.appPreference;
 
 public class ExamenActivity extends AppCompatActivity implements ListenerExamenInfoTask {
 
     private EditText examenName;
     private Button button;
     private ListView listView;
+    private String[] medicInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +42,10 @@ public class ExamenActivity extends AppCompatActivity implements ListenerExamenI
         listView = (ListView) findViewById(R.id.list_examen);
 
         //Get examens list
+        appPreference appPreference = new appPreference(ExamenActivity.this);
+        medicInfo = appPreference.getUserPrefs();
         ExamenInfoTask examenInfoTask = new ExamenInfoTask(ExamenActivity.this);
-        examenInfoTask.execute();
+        examenInfoTask.execute(medicInfo);
 
         //Adding examens
         button.setOnClickListener(new View.OnClickListener() {
@@ -50,9 +53,10 @@ public class ExamenActivity extends AppCompatActivity implements ListenerExamenI
             public void onClick(View v) {
                 if (!examenName.getText().toString().equals("")){
                     SubmitExamen submitExamen = new SubmitExamen();
-                    submitExamen.execute(examenName.getText().toString());
+                    String[] strings = {medicInfo[2], examenName.getText().toString()};
+                    submitExamen.execute(strings);
                     ExamenInfoTask examenInfoTask = new ExamenInfoTask(ExamenActivity.this);
-                    examenInfoTask.execute();
+                    examenInfoTask.execute(medicInfo);
                 }
                 else {
                     Toast.makeText(ExamenActivity.this,"Merci de remplir les cases", Toast.LENGTH_LONG).show();

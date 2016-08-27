@@ -23,14 +23,14 @@ public class ExamenInfoTask extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected JSONArray doInBackground(String... params) {
-        //String username = params[0];
+        String medicID = params[2];
         String urlLogin = "http://"+ appPreference.SERVER_ADDR+":"
                 +appPreference.SERVER_PORT+"/";
 
         Webb client = Webb.create();
         client.setBaseUri(urlLogin);
         Response<JSONArray> response = client.get("/getExams")
-                .param("medicID", '1')
+                .param("medicID", medicID)
                 .asJsonArray();
         return response.getBody();
     }

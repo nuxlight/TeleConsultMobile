@@ -28,6 +28,7 @@ import projet.cnam.teleconsultmobile.Tasks.ListenerExamenInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListenerPatientInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.ListnerConsultInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.PatientInfoTask;
+import projet.cnam.teleconsultmobile.appPreference;
 
 public class ResultActivity extends AppCompatActivity implements ListenerPatientInfoTask, ListnerConsultInfoTask, ListenerExamenInfoTask {
 
@@ -84,7 +85,9 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
             @Override
             public void onClick(View v) {
                 PatientInfoTask patientInfoTask = new PatientInfoTask(ResultActivity.this);
-                patientInfoTask.execute();
+                appPreference appPreference = new appPreference(appContext);
+                String[] medicInfo = appPreference.getUserPrefs();
+                patientInfoTask.execute(medicInfo);
             }
         });
 
@@ -92,7 +95,9 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
             @Override
             public void onClick(View v) {
                 ExamenInfoTask examenInfoTask = new ExamenInfoTask(ResultActivity.this);
-                examenInfoTask.execute();
+                appPreference appPreference = new appPreference(appContext);
+                String[] medicInfo = appPreference.getUserPrefs();
+                examenInfoTask.execute(medicInfo);
             }
         });
 

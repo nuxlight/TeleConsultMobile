@@ -23,6 +23,7 @@ import projet.cnam.teleconsultmobile.R;
 import projet.cnam.teleconsultmobile.Tasks.ListenerPatientInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.PatientInfoTask;
 import projet.cnam.teleconsultmobile.Tasks.SubmitConsult;
+import projet.cnam.teleconsultmobile.appPreference;
 
 public class ConsultActivity extends AppCompatActivity implements ListenerPatientInfoTask {
 
@@ -44,8 +45,10 @@ public class ConsultActivity extends AppCompatActivity implements ListenerPatien
         Button sendButton = (Button) findViewById(R.id.btn_consult);
 
         //populate the spinner patient
+        appPreference appPreference = new appPreference(ConsultActivity.this);
+        String[] medicInfo = appPreference.getUserPrefs();
         PatientInfoTask patientInfoTask = new PatientInfoTask(ConsultActivity.this);
-        patientInfoTask.execute();
+        patientInfoTask.execute(medicInfo);
 
         //Send a new consultation
         sendButton.setOnClickListener(new View.OnClickListener() {

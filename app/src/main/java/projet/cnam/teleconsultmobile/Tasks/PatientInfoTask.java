@@ -23,14 +23,14 @@ public class PatientInfoTask extends AsyncTask<String, Void, JSONArray> {
 
     @Override
     protected JSONArray doInBackground(String... strings) {
-        //String username = strings[0];
+        String medicID = strings[2];
         String urlLogin = "http://"+ appPreference.SERVER_ADDR+":"
                 +appPreference.SERVER_PORT+"/";
 
         Webb client = Webb.create();
         client.setBaseUri(urlLogin);
         Response<JSONArray> response = client.get("/getPatients")
-                .param("medicID", '1')
+                .param("medicID", medicID)
                 .asJsonArray();
         return response.getBody();
     }

@@ -22,17 +22,18 @@ public class appPreference {
         appContext = context;
     }
 
-    public void saveUserPrefs(String compte_id, String code_auditeur) {
+    public void saveUserPrefs(String compte_id, String code_auditeur, String id_medic) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("username_medic", compte_id);
         editor.putString("password_medic", code_auditeur);
+        editor.putString("id_medic", id_medic);
         editor.commit();
     }
 
     public String[] getUserPrefs(){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
-        String[] perfsResult = new String[]{preferences.getString("username_medic", "null"), preferences.getString("password_medic", "null")};
+        String[] perfsResult = new String[]{preferences.getString("username_medic", "null"), preferences.getString("password_medic", "null"), preferences.getString("id_medic", "null")};
         Log.i(getClass().getSimpleName(), "getUserPrefs = "+
                 preferences.getString("username_medic", "null")+" - "+
                 preferences.getString("password_medic", "null"));

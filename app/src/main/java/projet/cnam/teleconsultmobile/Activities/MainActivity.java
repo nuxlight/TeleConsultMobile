@@ -63,7 +63,7 @@ public class MainActivity extends Activity implements ListenerLoginTask {
     @Override
     public void onLoginTaskTrue(String auth) {
         //Save users preferences
-        this.appPreference.saveUserPrefs(usernameEntry.getText().toString(), passwordEntry.getText().toString());
+        this.appPreference.saveUserPrefs(usernameEntry.getText().toString(), passwordEntry.getText().toString(), auth);
         Intent intent = new Intent(MainActivity.this, Dashboard.class);
         intent.putExtra("medicID", auth);
         intent.putExtra("user", usernameEntry.getText().toString());
