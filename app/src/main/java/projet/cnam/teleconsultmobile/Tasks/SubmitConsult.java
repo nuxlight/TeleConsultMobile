@@ -17,12 +17,6 @@ import projet.cnam.teleconsultmobile.appPreference;
  */
 public class SubmitConsult extends AsyncTask<String, Void, Void> {
 
-    private Context appContext;
-
-    public SubmitConsult(Context context) {
-        this.appContext = context;
-    }
-
     @Override
     protected Void doInBackground(String... params) {
         String patientID = params[0];

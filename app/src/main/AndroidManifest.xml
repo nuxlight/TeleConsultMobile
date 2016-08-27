@@ -33,7 +33,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.EnvoiImageTest" />
-        <activity android:name=".Activities.ExamenActivity"></activity>
+        <activity android:name=".Activities.ExamenActivity" />
+        <activity android:name=".Activities.PatientActivity"></activity>
     </application>
 
 </manifest>

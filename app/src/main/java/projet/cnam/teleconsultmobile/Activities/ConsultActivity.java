@@ -52,7 +52,7 @@ public class ConsultActivity extends AppCompatActivity implements ListenerPatien
             @Override
             public void onClick(View v) {
                 if (!patientTrait.getText().toString().equals("") && !patientHisto.getText().toString().equals("")){
-                    SubmitConsult submitConsult = new SubmitConsult(ConsultActivity.this);
+                    SubmitConsult submitConsult = new SubmitConsult();
                     //Forge parameter to send to Webservice
                     String[] patientParms = patientSelector.getSelectedItem().toString().split("/");
                     ArrayList<String> parms = new ArrayList<String>();
