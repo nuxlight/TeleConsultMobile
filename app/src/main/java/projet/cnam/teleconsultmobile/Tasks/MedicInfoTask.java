@@ -15,8 +15,9 @@ import projet.cnam.teleconsultmobile.appPreference;
 /**
  * MedicInfoTask
  * =============
- * @author Thibaud
- * @version 0.1
+ * Récupération des informations du médecin connecté
+ * @author TeleconsultTeam
+ * @licence BSD
  */
 public class MedicInfoTask extends AsyncTask<String, Void, JSONArray> {
 

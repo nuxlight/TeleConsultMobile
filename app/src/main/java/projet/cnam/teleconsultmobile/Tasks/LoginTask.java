@@ -17,9 +17,11 @@ import java.net.HttpURLConnection;
 import projet.cnam.teleconsultmobile.appPreference;
 
 /**
- * Login on webservice Teleconsult
- * @author Thibaud Pellissier
- * @version 0.1
+ * LoginTask
+ * =============
+ * Connexion au Webservice de la solution Teleconsult
+ * @author TeleconsultTeam
+ * @licence BSD
  */
 public class LoginTask extends AsyncTask<String, Void, JSONObject>{
 

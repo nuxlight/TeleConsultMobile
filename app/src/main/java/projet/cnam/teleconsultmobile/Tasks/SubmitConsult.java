@@ -12,8 +12,11 @@ import org.json.JSONArray;
 import projet.cnam.teleconsultmobile.appPreference;
 
 /**
- * Created by thibaud on 26/08/16.
- * Envoi d'une consultation au WebService
+ * SubmitConsult
+ * =============
+ * Demande la création d'une consultation au Webservice du système Teleconsult
+ * @author TeleconsultTeam
+ * @licence BSD
  */
 public class SubmitConsult extends AsyncTask<String, Void, Void> {
 

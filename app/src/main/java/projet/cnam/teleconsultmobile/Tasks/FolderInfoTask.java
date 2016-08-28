@@ -11,7 +11,11 @@ import org.json.JSONException;
 import projet.cnam.teleconsultmobile.appPreference;
 
 /**
- * Created by thibaud on 02/07/16.
+ * FolderInfoTask
+ * =============
+ * @deprecated
+ * @author TeleconsultTeam
+ * @licence BSD
  */
 public class FolderInfoTask extends AsyncTask<String, Void, JSONArray> {
 

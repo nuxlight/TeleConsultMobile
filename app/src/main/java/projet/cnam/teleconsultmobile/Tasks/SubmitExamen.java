@@ -8,7 +8,11 @@ import com.goebl.david.Webb;
 import projet.cnam.teleconsultmobile.appPreference;
 
 /**
- * Created by thibaud on 27/08/16.
+ * SubmitExamen
+ * =============
+ * Demande la création d'un Examen au Webservice du système Teleconsult
+ * @author TeleconsultTeam
+ * @licence BSD
  */
 public class SubmitExamen extends AsyncTask<String, Void, Void> {
 

@@ -11,7 +11,11 @@ import org.json.JSONException;
 import projet.cnam.teleconsultmobile.appPreference;
 
 /**
- * Created by thibaud on 24/08/16.
+ * PatientInfoTask
+ * =============
+ * Récupération des informations des patients liés au médecin connecté
+ * @author TeleconsultTeam
+ * @licence BSD
  */
 public class PatientInfoTask extends AsyncTask<String, Void, JSONArray> {
 

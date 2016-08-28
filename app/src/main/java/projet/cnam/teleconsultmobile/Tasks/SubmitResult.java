@@ -8,7 +8,11 @@ import com.goebl.david.Webb;
 import projet.cnam.teleconsultmobile.appPreference;
 
 /**
- * Created by thibaud on 27/08/16.
+ * SubmitResult
+ * =============
+ * Demande la création d'un resultat (Dossier) au Webservice du système Teleconsult
+ * @author TeleconsultTeam
+ * @licence BSD
  */
 public class SubmitResult extends AsyncTask<String, Void, Void> {
     @Override

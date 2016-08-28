@@ -11,7 +11,11 @@ import org.json.JSONException;
 import projet.cnam.teleconsultmobile.appPreference;
 
 /**
- * Created by thibaud on 27/08/16.
+ * ConsultInfoTask
+ * =============
+ * Récupération des consultations d'un patient donné
+ * @author TeleconsultTeam
+ * @licence BSD
  */
 public class ConsultInfoTask extends AsyncTask<String, Void, JSONArray> {
 
