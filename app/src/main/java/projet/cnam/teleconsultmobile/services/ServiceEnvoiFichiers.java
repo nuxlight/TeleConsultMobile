@@ -2,14 +2,18 @@ package projet.cnam.teleconsultmobile.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,6 +30,8 @@ public class ServiceEnvoiFichiers extends Service {
      * Handler http
      */
     private final Handler httpHandler = new HttpHandler();
+    private String imageName;
+
     class HttpHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -36,7 +42,6 @@ public class ServiceEnvoiFichiers extends Service {
                     message.what = msg.what;
                     message.obj = 3;
                     Log.d(getClass().getName(), "DEBUG : "+msg);
-                    envoyerMessageClient(message);
                     break;
                 default:
                     super.handleMessage(msg);
@@ -62,7 +67,10 @@ public class ServiceEnvoiFichiers extends Service {
             switch (msg.what) {
                 case ENVOI_IMAGE:
                     try {
-                        InputStream ims = getAssets().open("femdoc.png");
+                        String filePath = getApplicationContext().getCacheDir().toString()+"/"+imageName+".jpg";
+                        Log.d(getClass().getName(),"Sending image : "+filePath);
+                        //InputStream ims = getAssets().open(filePath);
+                        InputStream ims = new FileInputStream(filePath);
                         HttpReq postDonnees = new HttpReq(httpHandler,ims);
                         thread = new Thread(postDonnees);
                         thread.start();
@@ -80,7 +88,7 @@ public class ServiceEnvoiFichiers extends Service {
 
     @Override
     public void onCreate() {
-        Log.e(TAG, "ON CREATE SERVICE");
+        Log.i(getClass().getName(),"SERVICE IMAGE STARTED");
     }
 
 
@@ -92,6 +100,8 @@ public class ServiceEnvoiFichiers extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         Toast.makeText(getApplicationContext(), "binding", Toast.LENGTH_SHORT).show();
+        //Get the image name
+        imageName = intent.getStringExtra("image_name");
         return mMessenger.getBinder();
     }
     @Override
@@ -110,7 +120,6 @@ public class ServiceEnvoiFichiers extends Service {
             // The client is dead.  Remove it from the list;
             Log.e(TAG, "Client NULL :" + e.toString(), e);
             Toast.makeText(getApplicationContext(), "Aucun client!", Toast.LENGTH_LONG).show();
-
         }
     }
 }

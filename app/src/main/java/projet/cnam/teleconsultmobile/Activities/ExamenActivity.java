@@ -55,6 +55,7 @@ public class ExamenActivity extends AppCompatActivity implements ListenerExamenI
                     SubmitExamen submitExamen = new SubmitExamen();
                     String[] strings = {medicInfo[2], examenName.getText().toString()};
                     submitExamen.execute(strings);
+                    examenName.setText("");
                     ExamenInfoTask examenInfoTask = new ExamenInfoTask(ExamenActivity.this);
                     examenInfoTask.execute(medicInfo);
                 }
