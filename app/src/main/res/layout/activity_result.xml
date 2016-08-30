@@ -79,7 +79,7 @@
             android:layout_marginTop="10dp"
             android:textColor="@color/md_black_1000"
             android:textSize="20dp"
-            android:text="Image : ...."/>
+            android:text="Fichiers : ...."/>
 
         <LinearLayout
             android:layout_width="wrap_content"

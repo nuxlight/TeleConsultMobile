@@ -48,10 +48,12 @@ public class HttpReq implements Runnable {
      */
     private Handler handler;
     private InputStream is;
+    private String imageName;
 
-    public HttpReq(Handler handler, InputStream is) {
+    public HttpReq(Handler handler, InputStream is, String imageName) {
         this.handler = handler;
         this.is = is;
+        this.imageName = imageName;
     }
 
     @Override
@@ -71,7 +73,7 @@ public class HttpReq implements Runnable {
         //List<NameValuePair> params = new LinkedList<NameValuePair>();
         MultipartEntityBuilder entity = MultipartEntityBuilder.create();
         try {
-            entity.addPart("fileImg", new InputStreamBody(this.is,"file"));
+            entity.addPart("fileImg", new InputStreamBody(this.is,this.imageName));
         } catch (Exception e) {
             e.printStackTrace();
         }

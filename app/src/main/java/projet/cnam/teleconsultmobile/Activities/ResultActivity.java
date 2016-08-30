@@ -206,8 +206,8 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
                 if (!consultID.equals("") && !examenID.equals("") && !imageName.equals("")){
                     imagePath = "./images/"+imageName+".jpg";
                     String[] strings = {consultID, examenID, imageName, imagePath};
-                    SubmitResult submitResult = new SubmitResult();
-                    submitResult.execute(strings);
+                    //SubmitResult submitResult = new SubmitResult();
+                    //submitResult.execute(strings);
                     Toast.makeText(ResultActivity.this,"Resultat rajouté", Toast.LENGTH_SHORT).show();
                     //Connection to send service
                     sendImageToServer(imageName);

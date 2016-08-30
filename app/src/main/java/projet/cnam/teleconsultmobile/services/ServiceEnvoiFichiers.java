@@ -71,7 +71,7 @@ public class ServiceEnvoiFichiers extends Service {
                         Log.d(getClass().getName(),"Sending image : "+filePath);
                         //InputStream ims = getAssets().open(filePath);
                         InputStream ims = new FileInputStream(filePath);
-                        HttpReq postDonnees = new HttpReq(httpHandler,ims);
+                        HttpReq postDonnees = new HttpReq(httpHandler,ims,imageName+".jpg");
                         thread = new Thread(postDonnees);
                         thread.start();
                     } catch (IOException e) {
