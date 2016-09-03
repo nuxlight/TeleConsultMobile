@@ -1,5 +1,6 @@
 package projet.cnam.teleconsultmobile.Activities;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,15 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import projet.cnam.teleconsultmobile.R;
 import projet.cnam.teleconsultmobile.Tasks.ListenerPatientInfoTask;
@@ -64,11 +62,15 @@ public class ConsultActivity extends AppCompatActivity implements ListenerPatien
                     parms.add(patientHisto.getText().toString());
                     String[] strings = parms.toArray(new String[parms.size()]);
                     submitConsult.execute(strings);
-                    Toast.makeText(ConsultActivity.this,"Consultation rajoutée", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(getWindow().findViewById(R.id.consultView),
+                            "Consultation rajoutée", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                     onBackPressed();
                 }
                 else{
-                    Toast.makeText(ConsultActivity.this,"Merci de completer les cases", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(getWindow().findViewById(R.id.consultView),
+                            "Merci de completer les cases", Snackbar.LENGTH_LONG);
+                    snackbar.show();
                 }
             }
         });

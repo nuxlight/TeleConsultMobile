@@ -53,8 +53,7 @@ public class MainActivity extends Activity implements ListenerLoginTask {
         configBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intentSet = new Intent(MainActivity.this, SettingsActivity.class);
-                Intent intentSet = new Intent(getApplicationContext(),EnvoiImageTest.class);
+                Intent intentSet = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intentSet);
             }
         });

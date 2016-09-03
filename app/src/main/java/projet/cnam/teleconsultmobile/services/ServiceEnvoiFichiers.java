@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import projet.cnam.teleconsultmobile.R;
 import projet.cnam.teleconsultmobile.runnable.HttpReq;
 
 public class ServiceEnvoiFichiers extends Service {
@@ -119,7 +121,6 @@ public class ServiceEnvoiFichiers extends Service {
         } catch (Exception e) {
             // The client is dead.  Remove it from the list;
             Log.e(TAG, "Client NULL :" + e.toString(), e);
-            Toast.makeText(getApplicationContext(), "Aucun client!", Toast.LENGTH_LONG).show();
         }
     }
 }

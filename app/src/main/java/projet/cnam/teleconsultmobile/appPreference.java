@@ -12,7 +12,7 @@ public class appPreference {
 
     //All variables configurable
     //public static String SERVER_ADDR = "10.0.2.2";
-    public static String SERVER_ADDR = "192.168.21.10";
+    public static String SERVER_ADDR = "teleconsultweb.ovh";
     public static String SERVER_PORT = "7777";
     public static String username_medic = "";
     public static String password_medic = "";

@@ -3,7 +3,8 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/resultView">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/resultat_bar"
@@ -97,8 +98,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
-                <TextView
-                    android:id="@+id/heartResult"
+                <Button
+                    android:id="@+id/btnResultBlue"
+                    android:text="Afficher elements"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

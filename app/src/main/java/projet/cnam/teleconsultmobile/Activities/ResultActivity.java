@@ -18,16 +18,23 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +48,7 @@ import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import projet.cnam.teleconsultmobile.R;
@@ -70,7 +78,7 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
     private Button resultSendBtn;
     private Context appContext;
     private ImageView photoViewImg;
-    private TextView heartView;
+    private Button btnBlueResult;
     //others var
     private String patientID = "";
     private String consultID = "";
@@ -91,11 +99,26 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
     private HeartBTListener _NConnListener;
     private final int HEART_RATE = 0x100;
     private final int INSTANT_SPEED = 0x101;
+    private ArrayList<String> hearthMeasureList;
+    private View alertLayout;
+    private LineChart blueChart;
 
     //Photo intent return
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            //Algo choice
+            AlertDialog.Builder algoBuilder = new AlertDialog.Builder(ResultActivity.this);
+            algoBuilder.setTitle("Algorithme de traitement d'image :");
+            final String[] cs = {"algo1", "algo2", "algo3"};
+            algoBuilder.setItems(cs, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    dialog.cancel();
+                }
+            });
+            algoBuilder.create().show();
             imageName = medicInfo[2]+"-"+consultID+"-"+examenID+"-img";
             Bundle extras = data.getExtras();
             String path = getApplicationContext().getCacheDir().toString();
@@ -169,6 +192,7 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
         Toolbar toolbar = (Toolbar) findViewById(R.id.resultat_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#FFFFFF'>Resultats</font>"));
+        blueLoading = new ProgressDialog(ResultActivity.this);
         //For dialog context
         appContext = getApplicationContext();
         appPreference appPreference = new appPreference(appContext);
@@ -187,7 +211,7 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
         photoBtn = (Button) findViewById(R.id.btnResultImg);
         photoViewImg = (ImageView) findViewById(R.id.resultImg);
         resultSendBtn = (Button) findViewById(R.id.btnResultSend);
-        heartView = (TextView) findViewById(R.id.heartResult);
+        btnBlueResult = (Button) findViewById(R.id.btnResultBlue);
 
         //Configure button actions
         consultBtn.setOnClickListener(new View.OnClickListener() {
@@ -224,9 +248,6 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
                             }
                         }
                         else {
-                            blueLoading = new ProgressDialog(ResultActivity.this);
-                            blueLoading.setMessage("Connexion avec le materiel...");
-                            blueLoading.show();
                             IntentFilter filter = new IntentFilter("android.bluetooth.device.action.PAIRING_REQUEST");
                             getApplicationContext().registerReceiver(new BTBroadcastReceiver(), filter);
                             IntentFilter filter2 = new IntentFilter("android.bluetooth.device.action.BOND_STATE_CHANGED");
@@ -256,13 +277,29 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
                                             dialog.cancel();
                                         }
                                     });
+                            blueLoading.setCancelable(false);
+                            blueLoading.setButton(DialogInterface.BUTTON_NEGATIVE, "Stop", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //Disconnect blue service
+                                    if(_bt.IsConnected()){
+                                        _bt.removeConnectedEventListener(_NConnListener);
+                                        _bt.Close();
+                                        Log.i(getClass().getName(),"MEASURE : "+hearthMeasureList.toString());
+                                    }
+                                    else{
+                                        Log.e(getClass().getName(),"Equipement not connected");
+                                    }
+                                    dialog.dismiss();
+                                }
+                            });
                             if(_bt.IsConnected())
                             {
+                                //Reset measure list
+                                hearthMeasureList = new ArrayList<String>();
                                 _bt.start();
-                                blueLoading.dismiss();
-                                String ErrorText  = "Connected to HxM "+DeviceName;
-                                resultAlert.setMessage(ErrorText);
-                                resultAlert.show();
+                                blueLoading.setMessage("Récuperation des informations...");
+                                blueLoading.show();
                             }
                             else
                             {
@@ -279,15 +316,59 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
             }
         });
 
+        //Show Heart result
+        btnBlueResult.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (hearthMeasureList == null){
+                    Snackbar snackbar = Snackbar.make(getWindow().findViewById(R.id.resultView),
+                            "Aucun relevé trouvé...",Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
+                else{
+                    LayoutInflater inflater = getLayoutInflater();
+                    alertLayout = inflater.inflate(R.layout.blue_alertbox, null);
+                    blueChart = (LineChart) alertLayout.findViewById(R.id.chart);
+                    //Create the chart with the heart data
+                    List<Entry> entries = new ArrayList<Entry>();
+                    for (int a=0;a < hearthMeasureList.size();a++){
+                        entries.add(new Entry(a, Integer.parseInt(hearthMeasureList.get(a))));
+                    }
+                    LineDataSet lineDataSet = new LineDataSet(entries,"-");
+                    LineData lineData = new LineData(lineDataSet);
+                    blueChart.setData(lineData);
+                    blueChart.invalidate();
+                    AlertDialog.Builder alert = new AlertDialog.Builder(ResultActivity.this);
+                    alert.setView(alertLayout);
+                    alert.setCancelable(false);
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    alert.create().show();
+                }
+            }
+        });
+
         //Validate button
         resultSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!consultID.equals("") && !examenID.equals("") && !imageName.equals("")){
-                    imagePath = "./images/"+imageName+".jpg";
-                    String[] strings = {consultID, examenID, imageName, imagePath};
-                    SubmitResult submitResult = new SubmitResult();
-                    submitResult.execute(strings);
+                    //imagePath = "./images/"+imageName+".jpg";
+                    imagePath = "/teleconsult/resources/images";
+                    if (hearthMeasureList == null){
+                        String[] strings = {consultID, examenID, imageName, imagePath, "NoData"};
+                        SubmitResult submitResult = new SubmitResult();
+                        submitResult.execute(strings);
+                    }
+                    else {
+                        String[] strings = {consultID, examenID, imageName, imagePath, hearthMeasureList.toString()};
+                        SubmitResult submitResult = new SubmitResult();
+                        submitResult.execute(strings);
+                    }
                     Toast.makeText(ResultActivity.this,"Resultat rajouté", Toast.LENGTH_SHORT).show();
                     //Connection to send service
                     sendImageToServer(imageName);
@@ -435,6 +516,10 @@ public class ResultActivity extends AppCompatActivity implements ListenerPatient
                 case HEART_RATE:
                     String HeartRatetext = msg.getData().getString("HeartRate");
                     System.out.println("Heart Rate Info is "+ HeartRatetext);
+                    //Adding rate info in hearth list
+                    if (!HeartRatetext.equals("-0")){
+                        hearthMeasureList.add(HeartRatetext.replace("-",""));
+                    }
                     break;
 
                 case INSTANT_SPEED:

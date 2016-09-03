@@ -21,6 +21,7 @@ public class SubmitResult extends AsyncTask<String, Void, Void> {
         String examenID = params[1];
         String imageName = params[2];
         String imagePath = params[3];
+        String heartString = params[4];
         String urlLogin = "http://"+ appPreference.SERVER_ADDR+":"
                 +appPreference.SERVER_PORT+"/";
 
@@ -29,8 +30,9 @@ public class SubmitResult extends AsyncTask<String, Void, Void> {
         Response<String> response = client.get("/createResult")
                 .param("consultID", consultID)
                 .param("examenID", examenID)
-                .param("imageName", imageName)
+                .param("imageName", imageName+".jpg")
                 .param("imagePath", imagePath)
+                .param("heartEntry", heartString)
                 .asString();
         return null;
     }
