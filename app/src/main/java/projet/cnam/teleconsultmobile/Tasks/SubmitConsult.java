@@ -35,7 +35,7 @@ public class SubmitConsult extends AsyncTask<String, Void, Void> {
 
         //Create date of the day
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
+        cal.add(Calendar.DATE, 0);
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(cal.getTime());
         Log.d(getClass().getName(),"DATE : "+formatted);
